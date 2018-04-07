@@ -1,0 +1,11 @@
+java -jar ~/tools/swagger-codegen-cli.jar generate \
+  -i ./video-indexer.json \
+  --api-package semantica.sng.services.ai.azure.videoindexer.client.api \
+  --model-package semantica.sng.services.ai.azure.videoindexer.client.model \
+  --invoker-package semantica.sng.services.ai.azure.videoindexer.client.invoker \
+  --group-id  semantica.sng \
+  --artifact-id sng-services-ai-azure-api-client \
+  --artifact-version 0.5-SNAPSHOT \
+  -l java \
+  --library resttemplate \
+  -o ../

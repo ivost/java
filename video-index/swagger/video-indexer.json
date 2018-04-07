@@ -1,0 +1,1675 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Video Indexer APIs - Production",
+    "version": "1.0"
+  },
+  "host": "videobreakdown.azure-api.net",
+  "basePath": "/Breakdowns",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyHeader": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    },
+    "apiKeyQuery": {
+      "type": "apiKey",
+      "name": "subscription-key",
+      "in": "query"
+    }
+  },
+  "security": [
+    {
+      "apiKeyHeader": []
+    },
+    {
+      "apiKeyQuery": []
+    }
+  ],
+  "paths": {
+    "/Api/Partner/Breakdowns/{id}": {
+      "delete": {
+        "description": "Deletes the uploaded video and if deleteInsights=true, then deletes the generated insights as well.",
+        "summary": "Delete Breakdown",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id (video id), returned by the Upload or Search APIs.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deleteInsights",
+            "in": "query",
+            "description": "Whether to delete the generated insights as well.",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid breakdown id"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "get": {
+        "description": "Returns the full details of the the given breakdown including all the insights (transcript, OCR, people, etc).\nThe full details include the topics, the faces, the blocks, etc.\nEach block includes time ranges, transcript lines, OCR lines, sentiments, faces and their block thumbnails.",
+        "summary": "Get Breakdown",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id (video id), returned by the Upload or Search APIs.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The requested language of the text. Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-WS",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/{id}/GetAccessToken": {
+      "get": {
+        "description": "Gets an access token to a video, which can be used for other operations, like getting a thumbnail.",
+        "summary": "Get Access Token",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The video id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "description": "A boolean that if set to true will return accessToken with editing permissions. \n(remove face, edit text etc...)",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/TrainingData/{id}": {
+      "delete": {
+        "description": "Deletes the training data by Id",
+        "summary": "Delete linguistic training data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The training data ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "True if deletion was successful else false."
+          },
+          "400": {
+            "description": "Training data not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "description": "Update the linguistic training data.",
+        "summary": "Update linguistic training data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Training data id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the training data",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of training data",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Training data language.",
+            "type": "string",
+            "enum": [
+              "en-US"
+            ]
+          },
+          {
+            "name": "groupName",
+            "in": "query",
+            "description": "Training data group. Example: 'Medical, Sport etc.'",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Training data metadata."
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- Another model with the same name and language already exists.\n- Model data is invalid or missing."
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/TrainingData/{trainingFileId}": {
+      "get": {
+        "description": "Get linguistic training data",
+        "summary": "Get linguistic training data",
+        "parameters": [
+          {
+            "name": "trainingFileId",
+            "in": "path",
+            "description": "Training data file id. If not specified we return the status of all the files.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "includeFileContent",
+            "in": "query",
+            "description": "If true we include the content of the file in the response. This argument is only valid for a specific file. If no training data id is provided we will ignore it.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lists of training data metadata that"
+          },
+          "400": {
+            "description": "File not found"
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/TrainingDataGroup/{id}": {
+      "delete": {
+        "description": "Deletes the training data group and all training data files under that group.",
+        "summary": "Delete linguistic training data group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Group id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "Group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "get": {
+        "description": "Get information about a training data group.",
+        "summary": "Get linguistic training data group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the training data group"
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- Invalid language"
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update linguistic training data group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The group id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the training data",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Training data language.",
+            "type": "string",
+            "enum": [
+              "en-US"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- Invalid language"
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/Model/{modelId}": {
+      "get": {
+        "description": "Returns the model meta data",
+        "summary": "Get linguistic model",
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "The model id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model status"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the uploaded video and if deleteInsights=true, then deletes the generated insights as well.",
+        "summary": "Delete Linguistic Model",
+        "parameters": [
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delete successful"
+          },
+          "400": {
+            "description": "Model not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns": {
+      "post": {
+        "description": "Uploads the given video, starts indexing it and returns a new breakdown id.\nThe supported formats are listed here:\nhttps://docs.microsoft.com/en-us/azure/media-services/media-services-media-encoder-standard-formats)",
+        "summary": "Upload",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The video name.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "privacy",
+            "in": "query",
+            "description": "The video privacy (Private or Public).",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Private",
+              "Public"
+            ]
+          },
+          {
+            "name": "videoUrl",
+            "in": "query",
+            "description": "A public url of the video/audio file (url encoded). If not specified, the file should be passed as a multipart/form body content.",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language of the video, to be used when generating the transcript. Arabic: ar-EG, Chinese (Simplified): zh-Hans, English: en-US, French: fr-FR, German: de-DE, Italian: it-IT, Japanese: ja-JP, Portuguese: pt-BR, Russian: ru-RU, Spanish: es-ES.",
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "ru-RU",
+              "ja-JP",
+              "de-DE",
+              "fr-FR",
+              "pt-BR",
+              "it-IT",
+              "zh-CN"
+            ]
+          },
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "An external id to associate with the video (can be searched for later).",
+            "type": "string"
+          },
+          {
+            "name": "metadata",
+            "in": "query",
+            "description": "Metadata to associate with the video (will be returned in queries).",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "The video description.",
+            "type": "string"
+          },
+          {
+            "name": "partition",
+            "in": "query",
+            "description": "A partition to partition videos by (used for searching a specific partition)",
+            "type": "string"
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "A url to notify when indexing is completed.\nIt should be a POST url and VideoIndexer will add 2 additional query string parameters to it: id and state.\n\nFor example, if the callback url is 'https://test.com/notifyme?projectName=MyProject', the notification will be sent with additional parameters to 'https://test.com/notifyme?projectName=MyProject&id=1234abcd&state=Processed'.",
+            "type": "string"
+          },
+          {
+            "name": "indexingPreset",
+            "in": "query",
+            "description": "The indexing preset to use (Default/AudioOnly/DefaultWithNoiseReduction).",
+            "type": "string",
+            "enum": [
+              "Default",
+              "AudioOnly",
+              "DefaultWithNoiseReduction"
+            ]
+          },
+          {
+            "name": "streamingPreset",
+            "in": "query",
+            "description": "The streaming preset to use (Default/AdaptiveBitrate).",
+            "type": "string",
+            "enum": [
+              "Default",
+              "AdaptiveBitrate"
+            ]
+          },
+          {
+            "name": "linguisticModelId",
+            "in": "query",
+            "description": "Linguistic model id as received by 'create linguistic model' call",
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "The video bytes as multipart/form-data",
+            "type": "string"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success - breakdown id"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/GetInsightsWidgetUrlByExternalId": {
+      "get": {
+        "description": "Gets a url to the cognitive insights widget url, including an access token, based on a given external id.\nThis API will only work for breakdowns which are owned by this subscription.",
+        "summary": "Get Insights Widget Url By External Id",
+        "parameters": [
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "An external id to search for (which was associated with a video of this subscription at upload).\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "widgetType",
+            "in": "query",
+            "description": "A type of a sub-widget to include (People, Sentiments, Keywords, Search)",
+            "type": "string",
+            "enum": [
+              "People",
+              "Sentiments",
+              "Keywords",
+              "Search"
+            ]
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "description": "Whether to allow the user to edit the insights (faces names, transcript, etc).",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Widget URL"
+          },
+          "400": {
+            "description": "Widget type is not valid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Accounts": {
+      "get": {
+        "description": "Returns the details of the user's accounts.",
+        "summary": "Get Accounts",
+        "responses": {
+          "200": {
+            "description": "User accounts"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/{id}/PlayerWidgetUrl": {
+      "get": {
+        "description": "Gets a url to the player widget url, including an access token.",
+        "summary": "Get Player Widget Url",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Widget URL"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/UpdateFaceName/{id}": {
+      "put": {
+        "description": "Updates the name of the given face and trains the face model to recognize that face in future videos.",
+        "summary": "Update Face Name",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "faceId",
+            "in": "query",
+            "description": "The face id (from the video's json)",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "description": "The new name for the face (use 'Unknown #1/2/3...' to make it anonymous again)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "new face name is not valid or breakdown is still in process"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/{id}/State": {
+      "get": {
+        "description": "Gets the processing state of the given breakdown id (Uploaded, Processing, Processed, Failed) and if Processing it returns the progress (e.g. 30%).",
+        "summary": "Get Processing State",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Breakdown state"
+          },
+          "404": {
+            "description": "Breakdown not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/{id}/InsightsWidgetUrl": {
+      "get": {
+        "description": "Gets a url to the cognitive insights widget url, including an access token.",
+        "summary": "Get Insights Widget Url",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "widgetType",
+            "in": "query",
+            "description": "A type of a sub-widget to include (People, Sentiments, Keywords, Search)",
+            "type": "string",
+            "enum": [
+              "People",
+              "Sentiments",
+              "Keywords",
+              "Search"
+            ]
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "description": "Whether to allow the user to edit the insights (faces names, transcript, etc).",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Widget url"
+          },
+          "400": {
+            "description": "Widget type is not valid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/{id}/VttUrl": {
+      "get": {
+        "description": "Gets a url to a VTT file with the given breakdown's captions.",
+        "summary": "Get Vtt Url",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id (video id), returned by the Upload or Search APIs.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The requested language of the VTT. Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-WS",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Url to VTT file"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/UpdateTranscript/{id}": {
+      "put": {
+        "description": "Updates the video with the given transcript.\nIf the specified language is the source language of the video, then the video will be re-indexed with the given transcript, and the transcript of all the other languages will be re-generated.\nIf the specified language is not the source language, the transcript of that language will be updated and the new text will be written into the existing lines and blocks of that language.",
+        "summary": "Update Transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language to update. Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-WS",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "For example, if the callback url is 'https://test.com/notifyme?projectName=MyProject', the notification will be sent with additional parameters to 'https://test.com/notifyme?projectName=MyProject&id=1234abcd&state=Processed'.",
+            "type": "string"
+          },
+          {
+            "name": "setAsSourceLanguage",
+            "in": "query",
+            "description": "If true the language parameter will be set as source language.",
+            "type": "string",
+            "default": "false",
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            }
+          }
+        ],
+        "consumes": [
+          "text/plain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Breakdown is still in process or VTT is not valid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/TrainingData": {
+      "post": {
+        "description": "Uploads the linguistic training data to be used to create a linguistic model.",
+        "summary": "Add linguistic training data",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the training data",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Training data language.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "en-US"
+            ]
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of training data",
+            "type": "string"
+          },
+          {
+            "name": "groupName",
+            "in": "query",
+            "description": "Training data group. Example: 'Medical, Sport etc.'",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Training data metadata."
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- Another model with the same name and language already exists.\n- Model data is invalid or missing."
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/reindexbyexternalid/{externalId}": {
+      "put": {
+        "description": "Re-indexes the video of the given external id.",
+        "summary": "Re-Index Breakdown By External Id",
+        "parameters": [
+          {
+            "name": "externalId",
+            "in": "path",
+            "description": "An external id (which was associated with a video of this subscription at upload).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "A url to notify when indexing is completed.\nIt should be a POST url and VideoIndexer will add 2 additional query string parameters to it: id and state.\n\nFor example, if the callback url is 'https://test.com/notifyme?projectName=MyProject', the notification will be sent with additional parameters to 'https://test.com/notifyme?projectName=MyProject&id=1234abcd&state=Processed'.",
+            "type": "string"
+          },
+          {
+            "name": "indexingPreset",
+            "in": "query",
+            "description": "The indexing preset to use (Default/AudioOnly)",
+            "type": "string"
+          },
+          {
+            "name": "streamingPreset",
+            "in": "query",
+            "description": "The streaming preset to use (Default/AdaptiveBitrate)",
+            "type": "string"
+          },
+          {
+            "name": "sourceLanguage",
+            "in": "query",
+            "description": "The media's source language. If not provided, source language will remain unchanged",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Operation failed"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/reindex/{id}": {
+      "put": {
+        "description": "Re-indexes the given breakdown.",
+        "summary": "Re-Index Breakdown",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The breakdown id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "A url to notify when indexing is completed.\nIt should be a POST url and VideoIndexer will add 2 additional query string parameters to it: id and state.\n\nFor example, if the callback url is 'https://test.com/notifyme?projectName=MyProject', the notification will be sent with additional parameters to 'https://test.com/notifyme?projectName=MyProject&id=1234abcd&state=Processed'.",
+            "type": "string"
+          },
+          {
+            "name": "indexingPreset",
+            "in": "query",
+            "description": "The indexing preset to use (Default/AudioOnly)\n",
+            "type": "string"
+          },
+          {
+            "name": "streamingPreset",
+            "in": "query",
+            "description": "The streaming preset to use (Default/AdaptiveBitrate)",
+            "type": "string"
+          },
+          {
+            "name": "sourceLanguage",
+            "in": "query",
+            "description": "The media's source language. If not provided, source language will remain unchanged",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Breakdown is still under processing"
+          },
+          "500": {
+            "description": "Reindex failed"
+          }
+        }
+      }
+    },
+    "/Api/Partner/Breakdowns/Search": {
+      "get": {
+        "description": "Performs search and returns the search results. If available, returns the matches of the search filters in the results.",
+        "summary": "Search",
+        "parameters": [
+          {
+            "name": "privacy",
+            "in": "query",
+            "description": "A privacy level (Private, Organization, Public).",
+            "type": "string",
+            "enum": [
+              "Private",
+              "Public"
+            ]
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "A breakdown id to search for.",
+            "type": "string"
+          },
+          {
+            "name": "partition",
+            "in": "query",
+            "description": "A partition to search for.",
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "in": "query",
+            "description": "An owner to search for.",
+            "type": "string"
+          },
+          {
+            "name": "face",
+            "in": "query",
+            "description": "A face to search for.",
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Free text to search for.",
+            "type": "string"
+          },
+          {
+            "name": "textScope",
+            "in": "query",
+            "description": "The text scope to search in.",
+            "type": "string",
+            "enum": [
+              "Transcript",
+              "Ocr"
+            ]
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of results to return.",
+            "type": "number"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "The number of results to skip (used for paging).",
+            "type": "number"
+          },
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "An external id to search for (which was associated with the video at upload).",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language to search in. You can specify multiple language parameters (e.g. $language=English&language=French) to search multiple languages. Having no language parameter will search all languages.\nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "default": "English",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-WS",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          },
+          {
+            "name": "searchInPublicAccount",
+            "in": "query",
+            "description": "Whether to look in the Public account (otherwise, in the user's account).",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/TrainingDataGroup": {
+      "post": {
+        "summary": "Create linguistic training data group",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the training data",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Training data language.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "en-US"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Training group id"
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- Invalid language"
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      }
+    },
+    "/Api/Customization/Language/Model": {
+      "post": {
+        "description": "Creates a linguistic model by getting a training data id.\nThe returned linguistic model id must be verified as ready before used for indexing.",
+        "summary": "Create linguistic model",
+        "parameters": [
+          {
+            "name": "trainingDataIds",
+            "in": "query",
+            "description": "Array of training data id's. Example: [\"7bb2f6bb-8396-4afb-93e7-96c359b75796\"]",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "waitUntilReady",
+            "in": "query",
+            "description": "Should wait until the training is complet",
+            "type": "string",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Linguistic model id"
+          },
+          "400": {
+            "description": "Indicate that one of the following occurred:\n- TrainingData not found."
+          },
+          "500": {
+            "description": "Failed to create model due to unexpected error"
+          }
+        }
+      }
+    },
+    "/api/Customization/Brands": {
+      "post": {
+        "description": "Creates new custom brand for the specified account",
+        "summary": "Create Brand",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Account's Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "The newly created brand",
+            "examples": {
+              "application/json": {
+                "wikiUrl": "https://en.wikipedia.org/wiki/Example",
+                "id": 128846,
+                "name": "Example",
+                "accountId": "e5b282f0-02aa-41d8-9066-be3b818d2965",
+                "lastModifierUserName": "Example User",
+                "createTime": "2018-02-06T13:51:38.3666667",
+                "lastUpdateTime": "2018-02-11T13:51:38.3666667",
+                "enabled": true,
+                "description": "This is an example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "May occur when brand already exists or on invalid input"
+          },
+          "500": {
+            "description": "Failed to create brand due to an unexpected error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "description": "Gets all custom brands per the account and Bing brands activation state (whether Bing brands should be used when applying the model)",
+        "summary": "Get Brands",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Account's Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of brands and state (true / false) of Bing brands in model",
+            "examples": {
+              "application/json": {
+                "results": [
+                  {
+                    "wikiUrl": "https://en.wikipedia.org/wiki/Example",
+                    "id": 128846,
+                    "name": "Example",
+                    "accountId": "e5b282f0-02aa-41d8-9066-be3b818d2965",
+                    "lastModifierUserName": "Example User",
+                    "createTime": "2018-01-06T13:51:38.3666667",
+                    "lastUpdateTime": "2018-01-11T13:51:38.3666667",
+                    "enabled": true,
+                    "description": "This is an example",
+                    "tags": [
+                      "Tag1",
+                      "Tag2"
+                    ]
+                  },
+                  {
+                    "wikiUrl": "https://en.wikipedia.org/wiki/Example2",
+                    "id": 128847,
+                    "name": "Example2",
+                    "accountId": "e5b282f0-02aa-41d8-9066-be3b818d2965",
+                    "lastModifierUserName": "Example User",
+                    "createTime": "2018-01-06T13:52:38.3666667",
+                    "lastUpdateTime": "2018-01-11T13:52:38.3666667",
+                    "enabled": false,
+                    "description": "This is an example",
+                    "tags": []
+                  }
+                ],
+                "state": true
+              }
+            }
+          },
+          "400": {
+            "description": "May occur on invalid input"
+          },
+          "500": {
+            "description": "Failed to get brands due to an unexpected error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/Customization/Brands/{id}": {
+      "delete": {
+        "description": "Removes brand for the specified account",
+        "summary": "Delete Brand",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Account's Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Brand was successfully deleted"
+          },
+          "400": {
+            "description": "May occur on invalid input"
+          },
+          "500": {
+            "description": "Failed to delete brand due to an unexpected error"
+          }
+        }
+      },
+      "get": {
+        "description": "Get specific custom brand",
+        "summary": "Get Brand",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Brand's Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Account's Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested custom brand",
+            "examples": {
+              "application/json": {
+                "wikiUrl": "https://en.wikipedia.org/wiki/Example",
+                "id": 128846,
+                "name": "Example",
+                "accountId": "e5b282f0-02aa-41d8-9066-be3b818d2965",
+                "lastModifierUserName": "Example User",
+                "createTime": "2018-01-06T13:51:38.3666667",
+                "lastUpdateTime": "2018-01-11T13:51:38.3666667",
+                "enabled": true,
+                "description": "This is an example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "May occur on invalid input"
+          },
+          "404": {
+            "description": "Brand with the given id was not found in the specified account"
+          },
+          "500": {
+            "description": "Failed to get brand due to an unexpected error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "description": "Updates specific brand's metadata",
+        "summary": "Update Brand",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Brand's Id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Account's Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated brand",
+            "examples": {
+              "application/json": {
+                "wikiUrl": "https://en.wikipedia.org/wiki/Example",
+                "id": 128846,
+                "name": "Example",
+                "accountId": "e5b282f0-02aa-41d8-9066-be3b818d2965",
+                "lastModifierUserName": "Example User",
+                "createTime": "2018-02-06T13:51:38.3666667",
+                "lastUpdateTime": "2018-02-11T13:51:38.3666667",
+                "enabled": false,
+                "description": "This is an update example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "May occur when account id is invalid, brand already exists or on invalid input"
+          },
+          "500": {
+            "description": "Failed to update brand due to an unexpected error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/Customization/Brands/ToggleModelActivationState": {
+      "put": {
+        "description": "Enable / disable the usage of Bing brands in model",
+        "summary": "Update Bing brands activation state",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "Acocunt's Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Current state",
+            "examples": {
+              "application/json": {
+                "state": true
+              }
+            }
+          },
+          "400": {
+            "description": "May occur on invalid input"
+          },
+          "500": {
+            "description": "Failed to update state due to an unexpected error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Body": {
+      "example": "{\"state\":true}"
+    }
+  }
+}
