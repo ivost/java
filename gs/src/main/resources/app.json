@@ -1,0 +1,192 @@
+{
+  "flyway": {
+    "enabled": true,
+    "placeholders": {
+      "es-url": "http://localhost:9200/"
+    }
+  },
+  "info": {
+    "name": "@project.name@",
+    "description": "@project.description@",
+    "version": "@project.version@"
+  },
+  "management": {
+    "security": {
+      "enabled": false
+    }
+  },
+  "multipart": {
+    "max-file-size": "512MB",
+    "max-request-size": "512MB"
+  },
+  "security": {
+    "ignored": "/static/**,/*.ico,/*.html"
+  },
+  "server": {
+    "compression": {
+      "enabled": true,
+      "mime-types": "application/javascript,application/json,font/woff,font/woff2,text/css,text/html"
+    },
+    "error": {
+      "whitelabel": {
+        "enabled": false
+      }
+    },
+    "port": 8443,
+    "ssl": {
+      "ciphers": [
+        "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+        "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+        "TLS_DHE_DSS_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        "TLS_DHE_DSS_WITH_AES_128_GCM_SHA256",
+        "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256",
+        "TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
+        "TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
+        "TLS_RSA_WITH_AES_256_CBC_SHA256",
+        "TLS_RSA_WITH_AES_256_CBC_SHA",
+        "TLS_RSA_WITH_AES_128_CBC_SHA256",
+        "TLS_RSA_WITH_AES_128_CBC_SHA"
+      ],
+      "key-store": "classpath:keystore.jks",
+      "key-store-password": "password",
+      "key-password": "test"
+    },
+    "tomcat": {
+      "protocol-header": "x-forwarded-proto"
+    }
+  },
+  "spring": {
+    "application": {
+      "name": "Semantica Cortex"
+    },
+    "aop": {
+      "auto": true
+    },
+    "batch": {
+      "job": {
+        "enabled": false
+      }
+    },
+    "datasource": {
+      "url": "jdbc:postgresql://localhost:5432/cortex",
+      "driverClassName": "org.postgresql.Driver",
+      "username": "test",
+      "password": "test",
+      "connection-properties": "loginTimeout=30;connectTimeout=30;",
+      "test-on-borrow": true,
+      "test-on-return": true,
+      "test-while-idle": true,
+      "validation-query": "SELECT 1",
+      "validation-interval": 10000,
+      "remove-abandoned": true,
+      "remove-abandoned-timeout": 120
+    },
+    "devtools": {
+      "livereload": {
+        "enabled": false
+      },
+      "restart": {
+        "enabled": false
+      }
+    },
+    "jackson": {
+      "dateFormat": "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+      "mapper": {
+        "DEFAULT_VIEW_INCLUSION": false
+      },
+      "deserialization": {
+        "FAIL_ON_UNKNOWN_PROPERTIES": false
+      },
+      "serialization": {
+        "FAIL_ON_EMPTY_BEANS": false,
+        "FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS": false,
+        "WRITE_DATES_AS_TIMESTAMPS": false
+      },
+      "serialization-inclusion": "NON_NULL"
+    },
+    "jpa": {
+      "database-platform": "semantica.sng.persist.jpa.CustomPostgresSQL9Dialect",
+      "generate-ddl": false,
+      "show_sql": false,
+      "hibernate": {
+        "ddl-auto": "auto"
+      },
+      "properties": {
+        "hibernate": {
+          "format_sql": true
+        }
+      }
+    },
+    "mvc": {
+      "dispatch-options-request": true,
+      "favicon": {
+        "enabled": false
+      }
+    },
+    "profiles": {
+      "active": "ldap-embedded,auth-basic,auth-form,capco-semantica"
+    },
+    "resources": {
+      "cache-period": 31536000,
+      "chain": {
+        "enabled": true,
+        "html-application-cache": true,
+        "strategy": {
+          "content": {
+            "enabled": true,
+            "paths": "/**"
+          }
+        }
+      },
+      "static-locations": "classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/"
+    },
+    "thymeleaf": {
+      "prefix": "${spring.resources.static-locations}/",
+      "cache": false
+    }
+  },
+  "sng": {
+    "export": {
+      "workspace": "/tmp/semantica/exports"
+    },
+    "import": {
+      "commit-size": 3000,
+      "inbox": {
+        "location": "/tmp/inbox",
+        "scan-rate": 5000
+      },
+      "workspace": "/tmp/semantica/imports",
+      "scheduler": {
+        "enabled": false
+      },
+      "email": {
+        "imap": {
+          "maxEmailDelay": 20,
+          "maxJobTimeLimit": 100,
+          "server": "outlook.office365.com",
+          "port": 993,
+          "user": "watchofficer@semanticresearch.com",
+          "password": "cortex-W@tchOff1c3r",
+          "reset": false,
+          "inbox": "INBOX"
+        }
+      }
+    },
+    "job": {
+      "thread-pool-size": 1
+    },
+    "performance": {
+      "threshold": 5000
+    },
+    "persistenceUnit": {
+      "name": "SNG",
+      "mappingBasePackage": "META-INF",
+      "mappingFileNamePattern": "**/*.jpa.xml"
+    },
+    "transactionTimeout": 30
+  }
+}
